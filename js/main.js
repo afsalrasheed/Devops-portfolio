@@ -57,8 +57,8 @@ const strandGlowMaterials = [
 function helixPoint(progress, phase) {
   const angle = progress * helixTurns * Math.PI * 2 + phase;
   return new THREE.Vector3(
-    Math.cos(angle) * helixRadius,
     (progress - .5) * helixHeight,
+    Math.cos(angle) * helixRadius,
     Math.sin(angle) * helixRadius
   );
 }
@@ -133,8 +133,8 @@ function animate() {
   requestAnimationFrame(animate);
   const elapsed = clock.getElapsedTime();
   particles.rotation.y = elapsed * .008;
-  dna.rotation.y = elapsed * .22;
-  dna.rotation.z = Math.sin(elapsed * .17) * .08;
+  dna.rotation.x = elapsed * .22;
+  dna.rotation.z = Math.sin(elapsed * .17) * .06;
   renderer.render(scene, camera);
 }
 if (renderer && !prefersReducedMotion) animate();
@@ -143,8 +143,10 @@ function resizeScene() {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
   const aspect = camera.aspect;
-  dna.position.set(aspect < .65 ? .45 : aspect < 1 ? 2 : 4.3, 0, -1.5);
-  dna.scale.setScalar(aspect < .65 ? .68 : aspect < 1 ? .85 : 1);
+  const x = aspect < 1 ? 0 : aspect < 1.4 ? 1.6 : 3;
+  const scale = aspect < .65 ? .38 : aspect < 1 ? .58 : aspect < 1.4 ? .78 : 1.05;
+  dna.position.set(x, 0, -1.5);
+  dna.scale.setScalar(scale);
   strandGlowMaterials.forEach(material => {
     material.opacity = aspect < .65 ? .14 : .2;
   });
