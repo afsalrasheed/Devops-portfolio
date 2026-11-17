@@ -11,12 +11,19 @@ scene.fog = new THREE.FogExp2(0x050b16, 0.022);
 const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 0.1, 100);
 camera.position.set(0, 0, 13);
 
-const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 1.7));
-renderer.setSize(innerWidth, innerHeight);
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.15;
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, innerWidth / innerHeight < .65 ? 1.25 : 1.7));
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
+} catch (error) {
+  console.error("WebGL background is unavailable; continuing without 3D effects.", error);
+  canvas.hidden = true;
+  renderer = null;
+}
 
 // Ambient data particles.
 const particleCount = 420;
@@ -30,6 +37,62 @@ const particleGeo = new THREE.BufferGeometry();
 particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
 const particles = new THREE.Points(particleGeo, new THREE.PointsMaterial({ color: 0x8acfff, size: .022, transparent: true, opacity: .48 }));
 scene.add(particles);
+
+const dna = new THREE.Group();
+scene.add(dna);
+
+const helixTurns = 2.4;
+const helixHeight = 7.6;
+const helixRadius = .9;
+const helixSegments = 240;
+const strandMaterials = [
+  new THREE.MeshBasicMaterial({ color: 0x3ecbff, transparent: true, opacity: .86, toneMapped: false }),
+  new THREE.MeshBasicMaterial({ color: 0x368cff, transparent: true, opacity: .86, toneMapped: false })
+];
+const strandGlowMaterials = [
+  new THREE.MeshBasicMaterial({ color: 0x32d4ff, transparent: true, opacity: .2, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }),
+  new THREE.MeshBasicMaterial({ color: 0x368cff, transparent: true, opacity: .2, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false })
+];
+
+function helixPoint(progress, phase) {
+  const angle = progress * helixTurns * Math.PI * 2 + phase;
+  return new THREE.Vector3(
+    Math.cos(angle) * helixRadius,
+    (progress - .5) * helixHeight,
+    Math.sin(angle) * helixRadius
+  );
+}
+
+for (let strand = 0; strand < 2; strand++) {
+  const phase = strand * Math.PI;
+  const points = Array.from({ length: helixSegments + 1 }, (_, index) =>
+    helixPoint(index / helixSegments, phase)
+  );
+  const curve = new THREE.CatmullRomCurve3(points);
+  const glow = new THREE.Mesh(new THREE.TubeGeometry(curve, helixSegments, .075, 8, false), strandGlowMaterials[strand]);
+  const core = new THREE.Mesh(new THREE.TubeGeometry(curve, helixSegments, .018, 6, false), strandMaterials[strand]);
+  dna.add(glow, core);
+}
+
+const rungGeometry = new THREE.CylinderGeometry(.012, .012, helixRadius * 2, 6);
+const rungMaterial = new THREE.MeshBasicMaterial({
+  color: 0x83dcff,
+  transparent: true,
+  opacity: .52,
+  toneMapped: false
+});
+const helixAxis = new THREE.Vector3(0, 1, 0);
+
+for (let index = 0; index < 30; index++) {
+  const progress = (index + .5) / 30;
+  const first = helixPoint(progress, 0);
+  const second = helixPoint(progress, Math.PI);
+  const direction = second.clone().sub(first);
+  const rung = new THREE.Mesh(rungGeometry, rungMaterial);
+  rung.position.copy(first).add(second).multiplyScalar(.5);
+  rung.quaternion.setFromUnitVectors(helixAxis, direction.normalize());
+  dna.add(rung);
+}
 
 gsap.utils.toArray(".reveal").forEach((el) => {
   ScrollTrigger.create({
@@ -51,26 +114,48 @@ addEventListener("scroll", () => {
 
 const menuToggle = document.querySelector("#menuToggle");
 const navLinks = document.querySelector("#navLinks");
-menuToggle.addEventListener("click", () => navLinks.classList.toggle("open"));
-navLinks.querySelectorAll("a").forEach(a => a.addEventListener("click", () => navLinks.classList.remove("open")));
+function setMenuOpen(isOpen) {
+  navLinks.classList.toggle("open", isOpen);
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+}
+menuToggle.addEventListener("click", () => setMenuOpen(!navLinks.classList.contains("open")));
+navLinks.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMenuOpen(false)));
+addEventListener("keydown", event => {
+  if (event.key === "Escape") setMenuOpen(false);
+});
 
 document.querySelector("#year").textContent = new Date().getFullYear();
 
 const clock = new THREE.Clock();
+const prefersReducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 function animate() {
+  if (!renderer) return;
   requestAnimationFrame(animate);
   const elapsed = clock.getElapsedTime();
   particles.rotation.y = elapsed * .008;
+  dna.rotation.y = elapsed * .22;
+  dna.rotation.z = Math.sin(elapsed * .17) * .08;
   renderer.render(scene, camera);
 }
-animate();
+if (renderer && !prefersReducedMotion) animate();
 
-addEventListener("resize", () => {
+function resizeScene() {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth, innerHeight);
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.7));
+  const aspect = camera.aspect;
+  dna.position.set(aspect < .65 ? .45 : aspect < 1 ? 2 : 4.3, 0, -1.5);
+  dna.scale.setScalar(aspect < .65 ? .68 : aspect < 1 ? .85 : 1);
+  strandGlowMaterials.forEach(material => {
+    material.opacity = aspect < .65 ? .14 : .2;
+  });
+  if (renderer) {
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, aspect < .65 ? 1.25 : 1.7));
+    renderer.setSize(innerWidth, innerHeight);
+    if (prefersReducedMotion) renderer.render(scene, camera);
+  }
   ScrollTrigger.refresh();
-});
+}
+addEventListener("resize", resizeScene);
 
+resizeScene();
 document.documentElement.classList.add("motion-ready");

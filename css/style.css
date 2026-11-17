@@ -54,3 +54,24 @@
 @media(min-width:651px) and (max-width:760px){.two-col{grid-template-columns:1fr;gap:35px}}
 @media(max-width:650px){.hero-portrait{right:0}}
 .button,.nav-contact{border-radius:5px}
+
+.about{background:linear-gradient(180deg,rgba(6,17,31,.82),rgba(6,17,31,.72))}
+.skills{background:rgba(4,12,23,.78)}
+.projects{background:linear-gradient(180deg,rgba(5,13,24,.82),rgba(7,20,35,.84))}
+.education{background:rgba(5,14,26,.8)}
+
+@media(max-width:650px){
+  .section-inner,.two-col>*,.skill-card,.project-card>*{min-width:0}
+  .stat-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .stat-row small{overflow-wrap:anywhere;line-height:1.5}
+  .skills-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .project-card{grid-template-columns:25px minmax(0,1fr)}
+  .project-body,.project-art{min-width:0}
+  .contact h2{max-width:100%;font-size:clamp(38px,12vw,48px)}
+}
+@media(max-width:360px){
+  .hero-title{font-size:clamp(64px,19vw,72px)}
+  .hero-actions,.contact-actions{gap:9px}
+  .hero-actions .button,.contact-actions .button{padding:13px 15px}
+  .stat-row small{font-size:6px}
+}
