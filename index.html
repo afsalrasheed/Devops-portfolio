@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050b16">
+  <meta name="description" content="AFSAL A R — DevOps Engineer portfolio. Linux, Docker, Kubernetes, Helm and automation projects.">
+  <title>AFSAL A R | DevOps & Cloud Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="loader" id="loader"><div class="loader-mark">A<span>.</span></div><div class="loader-line"><i></i></div><small>INITIALISING PORTFOLIO</small></div>
+  <div class="progress" id="progress"></div>
+  <canvas id="webgl" aria-hidden="true"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#home"><span class="brand-symbol">A<span>.</span></span> AFSAL A R</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation"><span></span><span></span></button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#education">Education</a>
+      <a class="nav-contact" href="#contact">Let's connect <span>↗</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero panel" id="home">
+      <figure class="hero-portrait">
+        <img src="assets/img_8935.webp" alt="Afsal working at a laptop" fetchpriority="high" decoding="async">
+      </figure>
+      <div class="hero-copy">
+        <p class="eyebrow reveal"><i class="status-dot"></i> OPEN TO ENTRY-LEVEL OPPORTUNITIES</p>
+        <p class="hero-intro reveal">HELLO, I'M</p>
+        <h1 class="hero-title reveal">AFSAL<br><span>A R.</span></h1>
+        <h2 class="hero-role reveal"><span id="roleText">DevOps Engineer</span></h2>
+        <p class="hero-description reveal">A Software Development and System Administration graduate interested in Linux, cloud technologies, automation, and building reliable application environments.</p>
+        <div class="hero-actions reveal">
+          <a class="button primary" href="#projects">Explore my work <span>↘</span></a>
+          <a class="button secondary" href="#contact">Get in touch</a>
+        </div>
+        <div class="hero-meta reveal"><span>KERALA, INDIA</span><b></b><span>LINUX · CLOUD · DEVOPS</span></div>
+      </div>
+      <div class="hero-hint"><span class="hint-line"></span> SCROLL TO EXPLORE</div>
+      <div class="hero-coordinate mono">09°59' N&nbsp; 76°18' E</div>
+    </section>
+
+    <section class="panel section about" id="about">
+      <div class="section-inner two-col">
+        <div class="section-heading reveal"><p class="eyebrow">01 / ABOUT</p><h2>Curious by nature.<br><span>Driven to build.</span></h2></div>
+        <div class="about-copy reveal">
+          <p class="lead">I enjoy understanding how systems work, solving technical problems, and turning ideas into dependable solutions.</p>
+          <p>My background combines software development with system administration. Through hands-on work, I have practised containerising applications, deploying microservices with Kubernetes and Helm, administering Linux environments, and automating server tasks with Bash.</p>
+          <div class="stat-row">
+            <div><strong>2026</strong><small>GRADUATE</small></div>
+            <div><strong>03</strong><small>INFRASTRUCTURE PROJECTS</small></div>
+            <div><strong>09<span>+</span></strong><small>TOOLS & TECHNOLOGIES</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel section skills" id="skills">
+      <div class="section-inner">
+        <div class="section-heading reveal"><p class="eyebrow">02 / TOOLKIT</p><h2>Tools for building<br><span>reliable systems.</span></h2><p class="section-note">Technologies and concepts explored through coursework, training and practical projects.</p></div>
+        <div class="skills-grid">
+          <article class="skill-card reveal"><span class="skill-index">01</span><div class="skill-icon">⌘</div><h3>Operating Systems</h3><p>Linux · Ubuntu · Windows</p></article>
+          <article class="skill-card reveal"><span class="skill-index">02</span><div class="skill-icon">▣</div><h3>Containers</h3><p>Docker · Docker Compose</p></article>
+          <article class="skill-card reveal"><span class="skill-index">03</span><div class="skill-icon">⎈</div><h3>Orchestration</h3><p>Kubernetes · Minikube · Helm</p></article>
+          <article class="skill-card reveal"><span class="skill-index">04</span><div class="skill-icon">⌁</div><h3>Automation & Versioning</h3><p>Bash · Git · GitHub · Cron</p></article>
+          <article class="skill-card reveal"><span class="skill-index">05</span><div class="skill-icon">☁</div><h3>Cloud Fundamentals</h3><p>Cloud concepts · Microsoft Azure fundamentals</p></article>
+          <article class="skill-card reveal"><span class="skill-index">06</span><div class="skill-icon">⌨</div><h3>Development</h3><p>Python · Java · JavaScript · HTML · CSS · Node.js</p></article>
+          <article class="skill-card reveal"><span class="skill-index">07</span><div class="skill-icon">◫</div><h3>Databases</h3><p>SQL · MySQL · PostgreSQL</p></article>
+          <article class="skill-card reveal"><span class="skill-index">08</span><div class="skill-icon">◎</div><h3>Core Strengths</h3><p>Problem solving · Debugging · Team collaboration</p></article>
+          <article class="skill-card reveal"><span class="skill-index">09</span><div class="skill-icon">⚙</div><h3>Configuration Management</h3><p>Ansible</p></article>
+          <article class="skill-card reveal"><span class="skill-index">10</span><div class="skill-icon">◈</div><h3>Infrastructure as Code</h3><p>Terraform</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel section projects" id="projects">
+      <div class="section-inner">
+        <div class="projects-top reveal"><div class="section-heading"><p class="eyebrow">03 / SELECTED WORK</p><h2>Built to <span>learn by doing.</span></h2></div><p class="section-note">Practical projects focused on deployment, Linux administration, automation and application delivery.</p></div>
+        <div class="project-list">
+          <article class="project-card reveal">
+            <div class="project-number">01</div><div class="project-body">
+              <div class="tags"><span>MICROSERVICES</span><span>KUBERNETES</span><span>HELM</span></div>
+              <h3>Petshop Management System</h3>
+              <p>A containerised microservices application with separate product, order and user services, a web frontend and PostgreSQL database. Packaged and deployed locally using Kubernetes and Helm.</p>
+              <div class="tech-list">Docker <b>·</b> Kubernetes <b>·</b> Helm <b>·</b> Python Flask <b>·</b> PostgreSQL <b>·</b> Nginx</div>
+              <a class="text-link" href="https://github.com/afsalrasheed/petshop_microservices" target="_blank" rel="noreferrer">View repository <span>↗</span></a>
+            </div><div class="project-art infra-art"><div class="infra-node n1">FRONTEND</div><div class="infra-node n2">PRODUCT</div><div class="infra-node n3">ORDER</div><div class="infra-node n4">USER</div><div class="infra-node n5">POSTGRES</div><div class="infra-lines"></div><small>MICROSERVICE ARCHITECTURE</small></div>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-number">02</div><div class="project-body">
+              <div class="tags"><span>LINUX ADMIN</span><span>BASH</span><span>AUTOMATION</span></div>
+              <h3>E-commerce Server Rescue</h3>
+              <p>A Linux server administration and recovery project featuring automated backups, deployment support, monitoring, restore operations and server reporting using Bash scripts and cron scheduling.</p>
+              <div class="tech-list">Ubuntu <b>·</b> Bash <b>·</b> Cron <b>·</b> Git <b>·</b> Linux Administration</div>
+              <a class="text-link" href="https://github.com/afsalrasheed/ecommerce-server-rescue" target="_blank" rel="noreferrer">View repository <span>↗</span></a>
+            </div><div class="project-art terminal-art"><div class="terminal-window"><div class="terminal-bar"><i></i><i></i><i></i><span>server-report.sh</span></div><div class="terminal-code"><p><em>$</em> ./monitor.sh</p><p class="ok">✓ CPU STATUS ........ OK</p><p class="ok">✓ DISK STATUS ....... OK</p><p class="ok">✓ BACKUP ............ DONE</p><p class="ok">✓ SERVICE CHECK ..... OK</p><p><em>$</em> <b class="blink">_</b></p></div></div><small>SERVER OPERATIONS / BASH</small></div>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-number">03</div><div class="project-body">
+              <div class="tags"><span>DOCKER</span><span>UBUNTU</span><span>ADMINISTRATION</span></div>
+              <h3>Ubuntu Container Administration</h3>
+              <p>Created an Ubuntu 24.04 container, configured a support user, installed curl and Vim, created a troubleshooting workspace, and verified that changes persisted after restarting the same container.</p>
+              <div class="tech-list">Docker <b>·</b> Ubuntu 24.04 <b>·</b> Linux users <b>·</b> Package management</div>
+              <a class="text-link" href="https://github.com/afsalrasheed/ubuntu-docker-container-administration.git" target="_blank" rel="noreferrer">View repository <span>↗</span></a>
+            </div><div class="project-art container-art"><div class="container-cube"><span>DOCKER</span><b>ubuntu:24.04</b><i>supportuser</i><i>/opt/troubleshooting</i></div><small>CONTAINER ADMINISTRATION</small></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel section education" id="education">
+      <div class="section-inner two-col">
+        <div class="section-heading reveal"><p class="eyebrow">04 / EDUCATION</p><h2>A foundation in<br><span>software & systems.</span></h2></div>
+        <div class="education-list">
+          <div class="education-card reveal"><div class="edu-year mono">2023 — 2026</div><div><h3>B.Voc — Software Development & System Administration</h3><p>MES College Marampally</p><p>Mahatma Gandhi University · Ernakulam, Kerala</p><span class="edu-status">DEGREE COMPLETED · 2026</span></div></div>
+          <div class="education-card reveal"><div class="edu-year mono">CURRENT</div><div><h3>Cloud &amp; DevOps Intern</h3><p>AkumenByQ</p><p>Currently completing an internship focused on cloud and DevOps.</p><span class="edu-status">INTERNSHIP IN PROGRESS</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel section contact" id="contact">
+      <div class="section-inner contact-inner reveal">
+        <p class="eyebrow">05 / CONTACT</p><h2>Let's build something<br><span>reliable together.</span></h2>
+        <p>I'm interested in entry-level opportunities in DevOps, cloud and system engineering. If you have an opportunity or would like to discuss a project, feel free to reach out.</p>
+        <div class="contact-actions">
+          <a class="button primary" href="mailto:afsaladu2@gmail.com">Email me <span>↗</span></a>
+          <a class="button secondary" href="https://www.linkedin.com/in/afsal-a-r-5723803b2/" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
+          <a class="button secondary" href="https://github.com/afsalrasheed" target="_blank" rel="noreferrer">GitHub <span>↗</span></a>
+        </div>
+        <div class="contact-details"><span>+91 6238521767</span><span>AFSALADU2@GMAIL.COM</span><span>ERNAKULAM, KERALA</span></div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><a class="brand" href="#home"><span class="brand-symbol">A<span>.</span></span> AFSAL A R</a><p>Designed with purpose. Built with curiosity.</p><span>© <span id="year"></span> AFSAL A R</span></footer>
+
+  <script>
+    window.addEventListener("load", () => {
+      window.setTimeout(() => document.querySelector("#loader").classList.add("done"), 450);
+    });
+  </script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
