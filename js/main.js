@@ -142,16 +142,15 @@ if (renderer && !prefersReducedMotion) animate();
 function resizeScene() {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
-  const aspect = camera.aspect;
-  const x = aspect < 1 ? 0 : aspect < 1.4 ? 1.6 : 3;
-  const scale = aspect < .65 ? .38 : aspect < 1 ? .58 : aspect < 1.4 ? .78 : 1.05;
-  dna.position.set(x, 0, -1.5);
-  dna.scale.setScalar(scale);
+  dna.position.set(0, 0, -1.5);
+  const viewWidth = 2 * (camera.position.z - dna.position.z) *
+    Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect;
+  dna.scale.setScalar(viewWidth / helixHeight * .96);
   strandGlowMaterials.forEach(material => {
-    material.opacity = aspect < .65 ? .14 : .2;
+    material.opacity = camera.aspect < .65 ? .14 : .2;
   });
   if (renderer) {
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, aspect < .65 ? 1.25 : 1.7));
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, camera.aspect < .65 ? 1.25 : 1.7));
     renderer.setSize(innerWidth, innerHeight);
     if (prefersReducedMotion) renderer.render(scene, camera);
   }
