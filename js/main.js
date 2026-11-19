@@ -4,6 +4,7 @@ import { ScrollTrigger } from "https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTr
 
 gsap.registerPlugin(ScrollTrigger);
 
+const prefersReducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const canvas = document.querySelector("#webgl");
 const scene = new THREE.Scene();
 scene.fog = new THREE.FogExp2(0x050b16, 0.022);
@@ -25,73 +26,91 @@ try {
   renderer = null;
 }
 
-// Ambient data particles.
-const particleCount = 420;
+// Soft atmospheric star particles.
+const particleCount = innerWidth < 650 ? 220 : 520;
 const particlePositions = new Float32Array(particleCount * 3);
 for (let i = 0; i < particleCount; i++) {
-  particlePositions[i*3] = (Math.random() - .5) * 16;
-  particlePositions[i*3+1] = (Math.random() - .5) * 15;
-  particlePositions[i*3+2] = (Math.random() - .5) * 9;
+  particlePositions[i*3] = (Math.random() - .5) * 18;
+  particlePositions[i*3+1] = (Math.random() - .5) * 16;
+  particlePositions[i*3+2] = (Math.random() - .5) * 10;
 }
 const particleGeo = new THREE.BufferGeometry();
 particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
-const particles = new THREE.Points(particleGeo, new THREE.PointsMaterial({ color: 0x8acfff, size: .022, transparent: true, opacity: .48 }));
+const particles = new THREE.Points(particleGeo, new THREE.PointsMaterial({
+  color: 0x9fdcff,
+  size: .026,
+  transparent: true,
+  opacity: .58
+}));
 scene.add(particles);
 
-const dna = new THREE.Group();
-scene.add(dna);
+const devopsSystem = new THREE.Group();
+scene.add(devopsSystem);
 
-const helixTurns = 2.4;
-const helixHeight = 7.6;
-const helixRadius = .9;
-const helixSegments = 240;
-const strandMaterials = [
-  new THREE.MeshBasicMaterial({ color: 0x3ecbff, transparent: true, opacity: .86, toneMapped: false }),
-  new THREE.MeshBasicMaterial({ color: 0x368cff, transparent: true, opacity: .86, toneMapped: false })
-];
-const strandGlowMaterials = [
-  new THREE.MeshBasicMaterial({ color: 0x32d4ff, transparent: true, opacity: .2, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }),
-  new THREE.MeshBasicMaterial({ color: 0x368cff, transparent: true, opacity: .2, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false })
-];
+const techNames = ["CLOUD", "DOCKER", "CONTAINER", "TERRAFORM", "CI/CD", "KUBERNETES", "AZURE", "YAML", "GIT", "LINUX"];
+const techItems = [];
 
-function helixPoint(progress, phase) {
-  const angle = progress * helixTurns * Math.PI * 2 + phase;
-  return new THREE.Vector3(
-    (progress - .5) * helixHeight,
-    Math.cos(angle) * helixRadius,
-    Math.sin(angle) * helixRadius
+techNames.forEach((name, index) => {
+  const labelCanvas = document.createElement("canvas");
+  labelCanvas.width = 256;
+  labelCanvas.height = 256;
+  const context = labelCanvas.getContext("2d");
+  context.clearRect(0, 0, 256, 256);
+  context.fillStyle = "rgba(8, 28, 48, .82)";
+  context.strokeStyle = index % 3 === 0 ? "rgba(255,155,87,.72)" : "rgba(112,224,232,.72)";
+  context.lineWidth = 5;
+  context.beginPath();
+  context.roundRect(16, 16, 224, 224, 28);
+  context.fill();
+  context.stroke();
+  context.fillStyle = index % 3 === 0 ? "#ffc18e" : "#a0e8f2";
+  context.font = name.length > 7 ? "700 27px monospace" : "700 34px monospace";
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.fillText(name, 128, 128, 190);
+
+  const texture = new THREE.CanvasTexture(labelCanvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  const item = new THREE.Mesh(
+    new THREE.PlaneGeometry(.82, .82),
+    new THREE.MeshBasicMaterial({
+      map: texture,
+      transparent: true,
+      opacity: .48,
+      depthWrite: false,
+      side: THREE.DoubleSide
+    })
   );
-}
-
-for (let strand = 0; strand < 2; strand++) {
-  const phase = strand * Math.PI;
-  const points = Array.from({ length: helixSegments + 1 }, (_, index) =>
-    helixPoint(index / helixSegments, phase)
-  );
-  const curve = new THREE.CatmullRomCurve3(points);
-  const glow = new THREE.Mesh(new THREE.TubeGeometry(curve, helixSegments, .075, 8, false), strandGlowMaterials[strand]);
-  const core = new THREE.Mesh(new THREE.TubeGeometry(curve, helixSegments, .018, 6, false), strandMaterials[strand]);
-  dna.add(glow, core);
-}
-
-const rungGeometry = new THREE.CylinderGeometry(.012, .012, helixRadius * 2, 6);
-const rungMaterial = new THREE.MeshBasicMaterial({
-  color: 0x83dcff,
-  transparent: true,
-  opacity: .52,
-  toneMapped: false
+  item.userData = {
+    speed: .09 + (index % 5) * .018,
+    phase: index * 1.43,
+    lane: -3.8 + (index % 5) * 1.9
+  };
+  item.position.set(-9 + index * 1.8, item.userData.lane, -.8 - (index % 3) * .15);
+  item.scale.setScalar(.72 + (index % 3) * .1);
+  devopsSystem.add(item);
+  techItems.push(item);
 });
-const helixAxis = new THREE.Vector3(0, 1, 0);
 
-for (let index = 0; index < 30; index++) {
-  const progress = (index + .5) / 30;
-  const first = helixPoint(progress, 0);
-  const second = helixPoint(progress, Math.PI);
-  const direction = second.clone().sub(first);
-  const rung = new THREE.Mesh(rungGeometry, rungMaterial);
-  rung.position.copy(first).add(second).multiplyScalar(.5);
-  rung.quaternion.setFromUnitVectors(helixAxis, direction.normalize());
-  dna.add(rung);
+const clouds = [];
+for (let i = 0; i < 5; i++) {
+  const cloud = new THREE.Group();
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x76cdf4,
+    transparent: true,
+    opacity: .12,
+    depthWrite: false
+  });
+  [[-.62, 0, .35], [0, .16, .48], [.58, 0, .36], [.95, -.12, .24]].forEach(([x, y, radius]) => {
+    const bubble = new THREE.Mesh(new THREE.SphereGeometry(radius, 16, 16), material);
+    bubble.position.set(x, y, 0);
+    cloud.add(bubble);
+  });
+  cloud.userData = { speed: .045 + i * .008, phase: i * 2.1, lane: 3.4 - i * 1.72 };
+  cloud.position.set(-9 + i * 4, cloud.userData.lane, -1.7);
+  cloud.scale.setScalar(.8 + i * .12);
+  devopsSystem.add(cloud);
+  clouds.push(cloud);
 }
 
 gsap.utils.toArray(".reveal").forEach((el) => {
@@ -103,8 +122,10 @@ gsap.utils.toArray(".reveal").forEach((el) => {
   });
 });
 
-gsap.to(".hero-title", { y: -35, opacity: .65, ease: "none",
-  scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+if (!prefersReducedMotion) {
+  gsap.to(".hero-title", { y: -35, opacity: .65, ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+}
 
 const progress = document.querySelector("#progress");
 addEventListener("scroll", () => {
@@ -127,14 +148,23 @@ addEventListener("keydown", event => {
 document.querySelector("#year").textContent = new Date().getFullYear();
 
 const clock = new THREE.Clock();
-const prefersReducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 function animate() {
   if (!renderer) return;
   requestAnimationFrame(animate);
   const elapsed = clock.getElapsedTime();
-  particles.rotation.y = elapsed * .008;
-  dna.rotation.x = elapsed * .22;
-  dna.rotation.z = Math.sin(elapsed * .17) * .06;
+  particles.rotation.y = elapsed * .006;
+  particles.position.y = Math.sin(elapsed * .08) * .12;
+  techItems.forEach((item) => {
+    const travel = elapsed * item.userData.speed + item.userData.phase;
+    item.position.x = -10 + ((travel % 20 + 20) % 20);
+    item.position.y = item.userData.lane + Math.sin(elapsed * .28 + item.userData.phase) * .22;
+    item.rotation.z = Math.sin(elapsed * .16 + item.userData.phase) * .055;
+    item.material.opacity = .42 + Math.sin(elapsed * .5 + item.userData.phase) * .07;
+  });
+  clouds.forEach((cloud) => {
+    cloud.position.x = -11 + ((elapsed * cloud.userData.speed + cloud.userData.phase + 11) % 22);
+    cloud.position.y = cloud.userData.lane + Math.sin(elapsed * .18 + cloud.userData.phase) * .28;
+  });
   renderer.render(scene, camera);
 }
 if (renderer && !prefersReducedMotion) animate();
@@ -142,13 +172,8 @@ if (renderer && !prefersReducedMotion) animate();
 function resizeScene() {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
-  dna.position.set(0, 0, -1.5);
-  const viewWidth = 2 * (camera.position.z - dna.position.z) *
-    Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect;
-  dna.scale.setScalar(viewWidth / helixHeight * .96);
-  strandGlowMaterials.forEach(material => {
-    material.opacity = camera.aspect < .65 ? .14 : .2;
-  });
+  devopsSystem.position.set(camera.aspect < .65 ? 0 : 1.15, 0, -1.2);
+  devopsSystem.scale.setScalar(camera.aspect < .65 ? .58 : camera.aspect < 1.3 ? .72 : .82);
   if (renderer) {
     renderer.setPixelRatio(Math.min(devicePixelRatio || 1, camera.aspect < .65 ? 1.25 : 1.7));
     renderer.setSize(innerWidth, innerHeight);
