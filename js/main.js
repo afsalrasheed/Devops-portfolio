@@ -122,6 +122,74 @@ gsap.utils.toArray(".reveal").forEach((el) => {
   });
 });
 
+const projectTiltCleanups = [];
+const projectMotion = gsap.context(() => {
+  if (prefersReducedMotion) return;
+
+  gsap.utils.toArray(".project-case").forEach((project) => {
+    const timeline = gsap.timeline({
+      scrollTrigger: { trigger: project, start: "top 82%", once: true }
+    });
+    timeline.from(project.querySelectorAll(".project-kicker, .project-title, .project-subtitle"), {
+      y: 22,
+      opacity: 0,
+      duration: .55,
+      stagger: .11,
+      ease: "power3.out"
+    });
+
+    const terminalLines = project.querySelectorAll(".terminal-line");
+    if (terminalLines.length) {
+      timeline.from(terminalLines, {
+        x: 10,
+        opacity: 0,
+        duration: .28,
+        stagger: .065,
+        ease: "power2.out"
+      }, .22);
+    }
+  });
+
+  if (!matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+  gsap.utils.toArray(".project-case").forEach((project) => {
+    let frame = 0;
+    const move = (event) => {
+      if (frame) return;
+      const pointerX = event.clientX;
+      const pointerY = event.clientY;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const bounds = project.getBoundingClientRect();
+        const horizontal = (pointerX - bounds.left) / bounds.width - .5;
+        const vertical = (pointerY - bounds.top) / bounds.height - .5;
+        project.style.setProperty("--tilt-x", `${-vertical * 1.4}deg`);
+        project.style.setProperty("--tilt-y", `${horizontal * 1.6}deg`);
+      });
+    };
+    const reset = () => {
+      if (frame) cancelAnimationFrame(frame);
+      frame = 0;
+      project.style.setProperty("--tilt-x", "0deg");
+      project.style.setProperty("--tilt-y", "0deg");
+    };
+
+    project.addEventListener("pointermove", move);
+    project.addEventListener("pointerleave", reset);
+    projectTiltCleanups.push(() => {
+      reset();
+      project.removeEventListener("pointermove", move);
+      project.removeEventListener("pointerleave", reset);
+    });
+  });
+});
+
+addEventListener("pagehide", (event) => {
+  if (event.persisted) return;
+  projectMotion.revert();
+  projectTiltCleanups.forEach((cleanup) => cleanup());
+}, { once: true });
+
 if (!prefersReducedMotion) {
   gsap.to(".hero-title", { y: -35, opacity: .65, ease: "none",
     scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });

@@ -21,7 +21,7 @@
     <a class="brand" href="#home"><span class="brand-symbol">A<span>.</span></span> AFSAL A R</a>
     <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks"><span></span><span></span></button>
     <nav class="nav-links" id="navLinks">
-      <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#education">Education</a>
+      <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#education">Education</a><a href="#certifications">Certifications</a>
       <a href="assets/Afsal-A-R-Resume.pdf" target="_blank" rel="noreferrer">Resume</a>
       <a class="nav-contact" href="#contact">Let's connect</a>
     </nav>
@@ -84,34 +84,163 @@
 
     <section class="panel section projects" id="projects">
       <div class="section-inner">
-        <div class="projects-top reveal"><div class="section-heading"><p class="eyebrow">03 / SELECTED WORK</p><h2>Built to <span>learn by doing.</span></h2></div><p class="section-note">Practical projects focused on deployment, Linux administration, automation and application delivery.</p></div>
+        <div class="projects-top">
+          <div class="projects-intro">
+            <p class="eyebrow project-kicker">SELECTED WORK / ENGINEERING PROJECTS</p>
+            <h2 class="projects-title">Building, Automating<br><span>&amp; Deploying.</span></h2>
+            <p class="projects-description">Exploring real-world infrastructure, containerization, Linux administration, and cloud-native technologies through hands-on engineering projects.</p>
+          </div>
+          <p class="projects-index mono">03 CASE STUDIES<br>INFRASTRUCTURE · AUTOMATION · DELIVERY</p>
+        </div>
+
         <div class="project-list">
-          <article class="project-card reveal">
-            <div class="project-number">01</div><div class="project-body">
-              <div class="tags"><span>MICROSERVICES</span><span>KUBERNETES</span><span>HELM</span></div>
-              <h3>Petshop Management System</h3>
-              <p>A containerised microservices application with separate product, order and user services, a web frontend and PostgreSQL database. Packaged and deployed locally using Kubernetes and Helm.</p>
-              <div class="tech-list">Docker <b>·</b> Kubernetes <b>·</b> Helm <b>·</b> Python Flask <b>·</b> PostgreSQL <b>·</b> Nginx</div>
-              <a class="text-link" href="https://github.com/afsalrasheed/petshop_microservices" target="_blank" rel="noreferrer">View repository <span>↗</span></a>
-            </div><div class="project-art infra-art"><div class="infra-node n1">FRONTEND</div><div class="infra-node n2">PRODUCT</div><div class="infra-node n3">ORDER</div><div class="infra-node n4">USER</div><div class="infra-node n5">POSTGRES</div><div class="infra-lines"></div><small>MICROSERVICE ARCHITECTURE</small></div>
+          <article class="project-case reveal" id="ecommerce-rescue">
+            <header class="project-case-header">
+              <p class="project-kicker mono">01 / LINUX OPERATIONS</p>
+              <h3 class="project-title">E-Commerce Rescue Project</h3>
+              <p class="project-subtitle">Linux Server Administration &amp; Automation</p>
+              <div class="project-tech" role="group" aria-label="Technologies used">
+                <span>Linux</span><span>Ubuntu</span><span>Bash</span><span>Git</span><span>Cron</span><span>System Administration</span>
+              </div>
+            </header>
+            <div class="project-case-layout">
+              <div class="project-case-copy">
+                <p class="project-description">A Linux-based server administration project focused on automating essential operational tasks for an e-commerce application.</p>
+                <details class="project-details">
+                  <summary>View Project Details</summary>
+                  <div class="project-details-content">
+                    <h4>Engineering focus</h4>
+                    <p>Make routine server care more repeatable through Bash scripts and scheduled tasks.</p>
+                    <ul class="project-features">
+                      <li>Automated backup scripts and Cron scheduling</li>
+                      <li>Linux user and permission management</li>
+                      <li>Website deployment automation</li>
+                      <li>Monitoring, log management, reporting and troubleshooting</li>
+                    </ul>
+                    <p class="project-takeaway"><strong>What this demonstrates</strong> — practical use of shell automation and scheduling for common server operations.</p>
+                  </div>
+                </details>
+                <a class="project-repo" href="https://github.com/afsalrasheed/ecommerce-server-rescue" target="_blank" rel="noreferrer">View repository <span aria-hidden="true">↗</span></a>
+              </div>
+              <div class="project-visual project-terminal" role="group" aria-label="Simulated terminal walkthrough">
+                <div class="terminal-window">
+                  <div class="terminal-bar"><span class="terminal-lights" aria-hidden="true"><i></i><i></i><i></i></span><span>ecommerce-rescue / bash</span><span class="terminal-live">SIMULATED</span></div>
+                  <pre class="terminal-output"><code><span class="terminal-line"><span class="terminal-prompt">$</span> cd ecommerce-rescue</span>
+<span class="terminal-line"><span class="terminal-prompt">$</span> ls</span>
+<span class="terminal-line terminal-muted">automation/  backups/  logs/</span>
+<span class="terminal-line"><span class="terminal-prompt">$</span> bash automation/backup.sh</span>
+<span class="terminal-line terminal-success">[ok] backup task completed</span>
+<span class="terminal-line"><span class="terminal-prompt">$</span> bash automation/monitor.sh</span>
+<span class="terminal-line terminal-success">[ok] monitoring checks complete</span>
+<span class="terminal-line"><span class="terminal-prompt">$</span> bash automation/server-report.sh</span>
+<span class="terminal-line terminal-success">[ok] system report generated</span></code></pre>
+                </div>
+                <p class="project-visual-caption mono">SCRIPTED SERVER OPERATIONS</p>
+              </div>
+            </div>
           </article>
-          <article class="project-card reveal">
-            <div class="project-number">02</div><div class="project-body">
-              <div class="tags"><span>LINUX ADMIN</span><span>BASH</span><span>AUTOMATION</span></div>
-              <h3>E-commerce Server Rescue</h3>
-              <p>A Linux server administration and recovery project featuring automated backups, deployment support, monitoring, restore operations and server reporting using Bash scripts and cron scheduling.</p>
-              <div class="tech-list">Ubuntu <b>·</b> Bash <b>·</b> Cron <b>·</b> Git <b>·</b> Linux Administration</div>
-              <a class="text-link" href="https://github.com/afsalrasheed/ecommerce-server-rescue" target="_blank" rel="noreferrer">View repository <span>↗</span></a>
-            </div><div class="project-art terminal-art"><div class="terminal-window"><div class="terminal-bar"><i></i><i></i><i></i><span>server-report.sh</span></div><div class="terminal-code"><p><em>$</em> ./monitor.sh</p><p class="ok">✓ CPU STATUS ........ OK</p><p class="ok">✓ DISK STATUS ....... OK</p><p class="ok">✓ BACKUP ............ DONE</p><p class="ok">✓ SERVICE CHECK ..... OK</p><p><em>$</em> <b class="blink">_</b></p></div></div><small>SERVER OPERATIONS / BASH</small></div>
+
+          <article class="project-case reveal" id="petshop-microservices">
+            <header class="project-case-header">
+              <p class="project-kicker mono">02 / CONTAINERS &amp; ORCHESTRATION</p>
+              <h3 class="project-title">Pet Shop Microservices</h3>
+              <p class="project-subtitle">Containerization &amp; Kubernetes Orchestration</p>
+              <div class="project-tech" role="group" aria-label="Technologies used">
+                <span>Docker</span><span>Docker Compose</span><span>Kubernetes</span><span>Helm</span><span>YAML</span><span>Minikube</span>
+              </div>
+            </header>
+            <div class="project-case-layout project-case-layout--architecture">
+              <div class="project-case-copy">
+                <p class="project-description">A microservices-based pet shop management application with separate frontend, backend services, and a PostgreSQL database.</p>
+                <details class="project-details">
+                  <summary>View Project Details</summary>
+                  <div class="project-details-content">
+                    <h4>Engineering focus</h4>
+                    <p>Package independently running services and deploy them together in a local Kubernetes environment.</p>
+                    <ul class="project-features">
+                      <li>Dockerized multi-service application</li>
+                      <li>Kubernetes Deployments, Services and namespace configuration</li>
+                      <li>Helm chart creation and deployment</li>
+                      <li>Application troubleshooting with kubectl</li>
+                    </ul>
+                    <p class="project-takeaway"><strong>What this demonstrates</strong> — service separation, container packaging and local orchestration with Kubernetes and Helm.</p>
+                  </div>
+                </details>
+                <a class="project-repo" href="https://github.com/afsalrasheed/petshop_microservices" target="_blank" rel="noreferrer">View repository <span aria-hidden="true">↗</span></a>
+              </div>
+              <div class="project-visual project-architecture">
+                <div class="architecture-heading"><span class="mono">SERVICE MAP</span><span class="architecture-status"><i></i> LOCAL CLUSTER</span></div>
+                <div class="architecture-map" role="img" aria-label="Frontend routes to Product, Order and User services, which use a PostgreSQL database.">
+                  <svg class="architecture-wires" viewBox="0 0 600 250" preserveAspectRatio="none" aria-hidden="true">
+                    <path d="M300 42 V75 H100 V100 M300 75 V100 M300 75 H500 V100 M100 145 V174 H300 V205 M300 145 V205 M500 145 V174 H300 V205"/>
+                  </svg>
+                  <div class="arch-node arch-frontend"><span class="arch-node-icon">UI</span><span>Frontend</span></div>
+                  <div class="arch-node arch-product"><span class="arch-node-icon">01</span><span>Product Service</span></div>
+                  <div class="arch-node arch-order"><span class="arch-node-icon">02</span><span>Order Service</span></div>
+                  <div class="arch-node arch-user"><span class="arch-node-icon">03</span><span>User Service</span></div>
+                  <div class="arch-node arch-database"><span class="arch-node-icon">DB</span><span>PostgreSQL</span></div>
+                </div>
+                <div class="orchestration-flow" role="img" aria-label="Docker containers are deployed as Kubernetes pods.">
+                  <div class="orchestration-stage">
+                    <span class="mono">DOCKER CONTAINERS</span>
+                    <div class="mini-containers"><i></i><i></i><i></i></div>
+                  </div>
+                  <span class="orchestration-arrow" aria-hidden="true">→</span>
+                  <div class="orchestration-stage">
+                    <span class="mono">KUBERNETES PODS</span>
+                    <div class="mini-pods"><i></i><i></i><i></i></div>
+                  </div>
+                </div>
+                <p class="project-visual-caption mono">MICROSERVICE DEPLOYMENT FLOW</p>
+              </div>
+            </div>
           </article>
-          <article class="project-card reveal">
-            <div class="project-number">03</div><div class="project-body">
-              <div class="tags"><span>DOCKER</span><span>UBUNTU</span><span>ADMINISTRATION</span></div>
-              <h3>Ubuntu Container Administration</h3>
-              <p>Created an Ubuntu 24.04 container, configured a support user, installed curl and Vim, created a troubleshooting workspace, and verified that changes persisted after restarting the same container.</p>
-              <div class="tech-list">Docker <b>·</b> Ubuntu 24.04 <b>·</b> Linux users <b>·</b> Package management</div>
-              <a class="text-link" href="https://github.com/afsalrasheed/ubuntu-docker-container-administration.git" target="_blank" rel="noreferrer">View repository <span>↗</span></a>
-            </div><div class="project-art container-art"><div class="container-cube"><span>DOCKER</span><b>ubuntu:24.04</b><i>supportuser</i><i>/opt/troubleshooting</i></div><small>CONTAINER ADMINISTRATION</small></div>
+
+          <article class="project-case reveal" id="ubuntu-container">
+            <header class="project-case-header">
+              <p class="project-kicker mono">03 / CONTAINER ADMINISTRATION</p>
+              <h3 class="project-title">Ubuntu Container Administration</h3>
+              <p class="project-subtitle">Linux Administration with Docker</p>
+              <div class="project-tech" role="group" aria-label="Technologies used">
+                <span>Docker</span><span>Ubuntu 24.04</span><span>Linux</span><span>APT</span><span>Command Line</span>
+              </div>
+            </header>
+            <div class="project-case-layout">
+              <div class="project-case-copy">
+                <p class="project-description">A practical Linux administration exercise inside an Ubuntu Docker container, covering user setup, package installation, workspace creation and container lifecycle management.</p>
+                <details class="project-details">
+                  <summary>View Project Details</summary>
+                  <div class="project-details-content">
+                    <h4>Engineering focus</h4>
+                    <p>Practice common system administration tasks in an isolated container environment.</p>
+                    <ul class="project-features">
+                      <li>Ubuntu 24.04 container creation and lifecycle management</li>
+                      <li>Linux user, directory and permission management</li>
+                      <li>APT package installation</li>
+                      <li>Basic command-line troubleshooting</li>
+                    </ul>
+                    <p class="project-takeaway"><strong>What this demonstrates</strong> — repeatable Linux administration inside a Docker container.</p>
+                  </div>
+                </details>
+                <a class="project-repo" href="https://github.com/afsalrasheed/ubuntu-docker-container-administration.git" target="_blank" rel="noreferrer">View repository <span aria-hidden="true">↗</span></a>
+              </div>
+              <div class="project-visual project-terminal" role="group" aria-label="Simulated terminal walkthrough">
+                <div class="terminal-window">
+                  <div class="terminal-bar"><span class="terminal-lights" aria-hidden="true"><i></i><i></i><i></i></span><span>ubuntu:24.04 / bash</span><span class="terminal-live">SIMULATED</span></div>
+                  <pre class="terminal-output"><code><span class="terminal-line"><span class="terminal-prompt">$</span> docker run -it ubuntu:24.04 bash</span>
+<span class="terminal-line terminal-muted">root@container:~#</span>
+<span class="terminal-line"><span class="terminal-prompt">$</span> apt update</span>
+<span class="terminal-line terminal-success">[ok] package lists updated</span>
+<span class="terminal-line"><span class="terminal-prompt">$</span> apt install curl vim -y</span>
+<span class="terminal-line terminal-success">[ok] curl and vim installed</span>
+<span class="terminal-line"><span class="terminal-prompt">$</span> adduser supportuser</span>
+<span class="terminal-line"><span class="terminal-prompt">$</span> mkdir -p /opt/troubleshooting</span>
+<span class="terminal-line"><span class="terminal-prompt">$</span> whoami</span>
+<span class="terminal-line terminal-success">root</span></code></pre>
+                </div>
+                <p class="project-visual-caption mono">CONTAINER SETUP WALKTHROUGH</p>
+              </div>
+            </div>
           </article>
         </div>
       </div>
@@ -123,6 +252,36 @@
         <div class="education-list">
           <div class="education-card reveal"><div class="edu-year mono">2023 — 2026</div><div><h3>B.Voc — Software Development & System Administration</h3><p>MES College Marampally</p><p>Mahatma Gandhi University · Ernakulam, Kerala</p><span class="edu-status">DEGREE COMPLETED · 2026</span></div></div>
           <div class="education-card reveal"><div class="edu-year mono">CURRENT</div><div><h3>Cloud &amp; DevOps Intern</h3><p>AkumenByQ</p><p>Currently completing an internship focused on cloud and DevOps.</p><span class="edu-status">INTERNSHIP IN PROGRESS</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel section skills certifications" id="certifications">
+      <div class="section-inner">
+        <div class="section-heading reveal">
+          <p class="eyebrow">CERTIFICATIONS / DATACAMP</p>
+          <h2>Learning in motion.<br><span>Skills in practice.</span></h2>
+          <p class="section-note">Course certifications in version control, container orchestration and cloud application hosting.</p>
+        </div>
+        <div class="skills-grid certification-grid">
+          <article class="skill-card cert-card reveal">
+            <span class="skill-index">01</span><div class="skill-icon" aria-hidden="true">⌁</div>
+            <h3>Introduction to Git</h3>
+            <p class="cert-provider"><span>PROVIDER</span><strong>DataCamp</strong></p>
+            <a class="certification-link" href="assets/certificates/introduction-to-git.pdf" target="_blank" rel="noreferrer">View certificate <span aria-hidden="true">↗</span></a>
+          </article>
+          <article class="skill-card cert-card reveal">
+            <span class="skill-index">02</span><div class="skill-icon" aria-hidden="true">⎈</div>
+            <h3>Introduction to Kubernetes</h3>
+            <p class="cert-provider"><span>PROVIDER</span><strong>DataCamp</strong></p>
+            <a class="certification-link" href="assets/certificates/introduction-to-kubernetes.pdf" target="_blank" rel="noreferrer">View certificate <span aria-hidden="true">↗</span></a>
+          </article>
+          <article class="skill-card cert-card reveal">
+            <span class="skill-index">03</span><div class="skill-icon" aria-hidden="true">☁</div>
+            <h3>Azure App Services</h3>
+            <p class="cert-provider"><span>PROVIDER</span><strong>DataCamp</strong></p>
+            <a class="certification-link" href="assets/certificates/azure-app-services.pdf" target="_blank" rel="noreferrer">View certificate <span aria-hidden="true">↗</span></a>
+          </article>
         </div>
       </div>
     </section>
